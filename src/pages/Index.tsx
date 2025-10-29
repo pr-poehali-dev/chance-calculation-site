@@ -37,6 +37,13 @@ const Index = () => {
     return (value / totalSum) * 100;
   };
 
+  const calculateDropRate = (chance: number): string => {
+    if (chance === 0) return '—';
+    const rate = 100 / chance;
+    if (rate < 2) return 'каждый раз';
+    return `~1 из ${Math.round(rate)}`;
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-12 px-4">
       <div className="max-w-4xl mx-auto animate-fade-in">
@@ -96,6 +103,7 @@ const Index = () => {
               
               {rarities.map((rarity) => {
                 const chance = calculateChance(rarity.value);
+                const dropRate = calculateDropRate(chance);
                 return (
                   <div 
                     key={rarity.id} 
@@ -116,6 +124,10 @@ const Index = () => {
                       value={chance} 
                       className="h-2"
                     />
+                    <div className="flex items-center justify-end gap-2 text-xs text-slate-500">
+                      <Icon name="Dices" size={14} />
+                      <span>Выпадает {dropRate}</span>
+                    </div>
                   </div>
                 );
               })}
