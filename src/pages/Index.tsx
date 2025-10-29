@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 
 interface RarityData {
@@ -22,6 +23,7 @@ const Index = () => {
     { id: 7, value: 0, label: 'Редкость 7' },
     { id: 8, value: 0, label: 'Редкость 8' },
   ]);
+  const [showResults, setShowResults] = useState(false);
 
   const handleValueChange = (id: number, newValue: string) => {
     const numValue = parseFloat(newValue) || 0;
@@ -84,7 +86,20 @@ const Index = () => {
             ))}
           </div>
 
-          <div className="border-t border-slate-200 pt-8">
+          <div className="flex justify-center my-6">
+            <Button 
+              onClick={() => setShowResults(true)} 
+              size="lg"
+              className="text-lg px-12 h-14 shadow-lg hover:shadow-xl transition-all"
+              disabled={totalSum === 0}
+            >
+              <Icon name="Sparkles" size={24} />
+              Рассчитать шансы
+            </Button>
+          </div>
+
+          {showResults && totalSum > 0 && (
+          <div className="border-t border-slate-200 pt-8 animate-fade-in">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
                 <Icon name="Calculator" size={24} className="text-primary" />
@@ -133,6 +148,7 @@ const Index = () => {
               })}
             </div>
           </div>
+          )}
         </Card>
 
         <div className="mt-6 text-center text-sm text-slate-500">
